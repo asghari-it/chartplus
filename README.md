@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/logo.svg" alt="chartplus" width="88" />
+<img src="public/icon.svg" alt="chartplus" width="88" />
 
 # chartplus
 
