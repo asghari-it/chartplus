@@ -1,0 +1,50 @@
+# dependencies
+node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# logs
+*.log
+
+# env files (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel
+
+# database (local sqlite)
+/db/*.db
+/db/*.db-journal
+
+# user uploads / generated files
+/upload
+/download
+
+# local sandbox tooling (not part of the app)
+/worklog.md
+/.zscripts
+/tests
+/examples
+/mini-services
+/Caddyfile
+/skills

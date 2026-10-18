@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// پروفایل کاربر (تک‌کاربره — اپ شخصی)
+model Profile {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  level         String   // beginner | intermediate | professional
+  goal          String   // learning | investing | trading
+  notifications Boolean  @default(true)
+  priceAlerts   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// جلسه‌های چت با هوش مصنوعی
+model ChatSession {
+  id        String        @id @default(cuid())
+  title     String        @default("گفتگوی جدید")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  messages  ChatMessage[]
+}
+
+// پیام‌های چت
+model ChatMessage {
+  id        String      @id @default(cuid())
+  sessionId String
+  role      String // user | assistant
+  content   String
+  createdAt DateTime    @default(now())
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+// تاریخچه تحلیل‌های هوش مصنوعی
+model AnalysisRecord {
+  id          String   @id @default(cuid())
+  symbol      String // BTC یا "uploaded-chart"
+  assetName   String   @default("")
+  source      String // image | symbol
+  imageData   String? // بندانگشتی تصویر آپلودی (base64)
+  trend       String   @default("") // bullish | bearish | neutral
+  confidence  Int      @default(0)
+  support     Float?
+  resistance  Float?
+  target      Float?
+  stopLoss    Float?
+  summary     String   @default("")
+  fullText    String   @default("")
+  timeframe   String   @default("4H")
+  createdAt   DateTime @default(now())
+}
+
+// پیشرفت درس‌های آموزشی
+model LessonProgress {
+  id        String   @id @default(cuid())
+  lessonId  String   @unique
+  completed Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+// هشدارهای قیمت
+model PriceAlert {
+  id        String   @id @default(cuid())
+  symbol    String
+  condition String // above | below
+  price     Float
+  triggered Boolean  @default(false)
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
